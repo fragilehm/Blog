@@ -1,5 +1,8 @@
 <% if (session.administrator) { %>
     <section class="toolbar">
-        <a href="/entry/create">Create a new blog entry</a>
+    	<form method="POST" action="/entry/create">
+            <input type="submit" value="Create New Entry"></span>
+        </form>
+      
     </section>
 <% } %>

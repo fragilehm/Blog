@@ -1,6 +1,6 @@
 <% if (session.errors && session.errors.length > 0) { %>
     <section class="error-box">
-        <p><%= session.errors %></p>
+        <p class="error" display: inline-block><%= session.errors %></p>
     </section>
     <% session.errors = []; %>
 <% } %>

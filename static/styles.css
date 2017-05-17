@@ -1,6 +1,6 @@
 body {
     font: 16px arial, sans-serif;
-    background-color: cyan;
+    background-color:  #fff;
 }
 
 .toolbar input[type="submit"] {
@@ -10,9 +10,10 @@ body {
     padding: 0!important;
     font: inherit;
     cursor: pointer;
-    text-decoration: underline;
 }
-
+a {
+    text-decoration: unset;
+}
 .error {
     padding: 1em;
     border: 0.1em dashed red;
@@ -21,4 +22,24 @@ body {
 
 .comment > .login {
     font-weight: bold;
+}
+span.commentlastupdate {
+    font-weight: normal;
+    float: right;
+    font-size: 0.7em;
+}
+p.error {
+    color: red;
+    background-color: cyan;
+    border: 0;
+}
+div.center {
+    text-align: center;
+}
+footer {
+    float: right;
+}
+span.logout {
+    float: right;
+    font-size: 1.2em;
 }

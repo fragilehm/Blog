@@ -4,15 +4,19 @@
     <body>
         <main>
             <% include partials/header %>
+            <div class="center">
+
             <% include partials/user-toolbar %>
             <% include partials/error-box %>
             <% include partials/entry-toolbar %>
             <article>
                 <h1><%= entry.title %></h1>
                 <p><%= entry.content %></p>
+                <hr>
             </article>
-            <% include partials/comments %>
             <% include partials/comment-form %>
+            <% include partials/comments %>
+            </div>
             <% include partials/footer %>
         </main>
     </body>

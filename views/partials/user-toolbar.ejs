@@ -2,7 +2,8 @@
     <% if (session.authorized) { %>
         <p><%= session.login %></p>
         <form method="POST" action="/logout" style="display:inline">
-            <input type="submit" value="logout">
+            <span class="logout"><input type="submit" value="Logout"></span>
+            <br><hr>
         </form>
     <% } else { %>
         <a href="/login">login</a>

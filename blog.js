@@ -97,7 +97,7 @@ Comment.belongsTo(Entry);
 
 const server = express();
 server.set('view engine', 'ejs');
-
+const user_id = 1;
 server.use(express.static(path.join(__dirname, 'static')));
 server.use(bodyParser.urlencoded({ 'extended': true }));
 server.use(session({
@@ -200,7 +200,8 @@ server.post('/logout', (request, response) => {
 });
 
 server.get(['/', '/entries'], (request, response) => {
-    Entry.findAll().then(entries => {
+    Entry.findAll({order: '"updatedAt" DESC' }
+        ).then(entries => {
         response.render('entries', {
             'session': request.session,
             'entries': entries
@@ -228,7 +229,8 @@ server.get(['/entry/create', '/entry/:id/update'], (request, response) => {
     if (request.path === '/entry/create') {
         response.render('entry-create-update', {
             'session': request.session,
-            'entry': null
+            'entry': null,
+            'comment': null
         });
     } else {
         id = request.params['id'];
@@ -242,7 +244,8 @@ server.get(['/entry/create', '/entry/:id/update'], (request, response) => {
         Entry.findById(id).then(entry => {
             response.render('entry-create-update', {
                 'session': request.session,
-                'entry': entry
+                'entry': entry,
+                'comment': null
             });
         }).catch(error => {
             console.error(error);
@@ -363,22 +366,100 @@ server.get('/entry/:id', (request, response) => {
         response.redirect(previousLocation);
         return;
     }
-    Entry.findById(id, {
+    Entry.findById(id,  {
         'include': [ {
             'model': Comment,
             'include': [ User ]
-        } ]
+        }
+        ],
     }).then(entry => {
         response.render('entry', {
             'session': request.session,
             'entry': entry,
-            'comment': null
+            'comment': null,
+            'userId': request.session.userID,
+            'admin': request.session.administrator
         });
     }).catch(error => {
         console.error(error);
         request.session.errors.push('The blog entry was not found.');
         response.redirect(previousLocation);
     });
+});
+
+server.get([
+    '/entry/:entryID/comment/:id/delete',
+    '/entry/:entryID/comment/:id/update'
+]
+, (request, response) => {
+    const previousLocation = request.header('Referer') || '/entries';
+
+    if (!request.session.authorized) {
+        response.status(401).end('Unauthorized');
+
+        return;
+    }
+    const destination = request.header('Referer') || '/entries';
+
+    id = request.params['id'];
+
+
+    const userID = request.session['userID'];
+    if (!userID) {
+        request.session.errors.push("The comment's owner is unknown.");
+        response.redirect(destination);
+
+        return;
+    }
+
+    const entryID = request.params['entryID'];
+    if (!entryID) {
+        request.session.errors.push('The owning blog entry is not specified.');
+        response.redirect(destination);
+
+        return;
+    }
+
+    if (request.path.endsWith('/delete')) {
+
+        Comment.destroy({
+                'where': {
+                    'id': id
+                }
+            }).then(() => {
+                response.redirect(`/entry/${entryID}`);
+                
+
+            }).catch(error => {
+                console.error(error);
+                request.session.errors.push('Failed to remove the blog entry.');
+                response.redirect(`/entry/${entryID}`);
+                
+            });
+    } else {
+
+        Entry.findById(entryID).then(entry => {
+            Comment.findById(id).then(comment => {
+                response.render('entry-create-update', {
+                    'entry': entry,
+                    'session': request.session,
+                    'comment': comment,
+                    'userId': request.session.userID,
+                    'admin': request.session.administrator
+                });
+            }).catch(error => {
+                console.error(error);
+                request.session.errors.push('Failed to find the specified comment.')
+                response.redirect(previousLocation);
+            });
+        }).catch(error => {
+            console.error(error);
+            request.session.errors.push('The blog entry was not found.');
+            response.redirect(previousLocation);
+        });
+       
+    }
+
 });
 
 server.post([
@@ -442,7 +523,7 @@ server.post([
         }).catch(error => {
             console.error(error);
 
-            request.session.errors.push('Failed to create a new comment.');
+            request.session.errors.push('Failed to update a comment.');
             response.redirect(`/entry/${entryID}`);
         });
     } else {
