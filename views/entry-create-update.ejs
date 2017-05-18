@@ -6,7 +6,11 @@
             <% include partials/header %>
             <% include partials/user-toolbar %>
             <% include partials/error-box %>
-            <% include partials/entry-form %>
+            <% if (!comment) { %>
+                <% include partials/entry-form %>
+            <% } else { %>
+                <% include partials/comment-form %>
+            <% } %>
             <% include partials/footer %>
         </main>
     </body>
