@@ -23,7 +23,7 @@ a {
 .comment > .login {
     font-weight: bold;
 }
-span.commentlastupdate {
+span.lastupdate {
     font-weight: normal;
     float: right;
     font-size: 0.7em;
@@ -33,13 +33,10 @@ p.error {
     background-color: cyan;
     border: 0;
 }
-div.center {
-    text-align: center;
-}
 footer {
     float: right;
 }
-span.logout {
+.loginout {
     float: right;
     font-size: 1.2em;
 }

@@ -169,11 +169,10 @@ server.post('/registrate', (request, response) => {
     const login = request.body['login'];
     const password = request.body['password'];
     const email = request.body['email'];
-    
-  
 
     const credentials =
          bcrypt.hashSync(password, bcryptSaltLength);
+         
     User.create({
         'firstname': firstname,
         'lastname': lastname,
@@ -440,7 +439,7 @@ server.get([
 
         Entry.findById(entryID).then(entry => {
             Comment.findById(id).then(comment => {
-                response.render('entry-create-update', {
+                response.render('comment-update', {
                     'entry': entry,
                     'session': request.session,
                     'comment': comment,

@@ -4,7 +4,6 @@
     <body>
         <main>
             <% include partials/head %>
-            <div class="center">
 
             <% include partials/user-toolbar %>
             <% include partials/error-box %>
@@ -13,12 +12,11 @@
                     <% for (let [id, entry] of Object.entries(entries)) { %>
                         <li>
                             <a href='/entry/<%= entry.id %>'><%= entry.title %></a>
-                        </li>
+                            <span class="lastupdate"><%= entry.updatedAt %></span>
                     <% } %>
                 </ul>
             </article>
             <% include partials/entries-toolbar %>
-            </div>
             <% include partials/footer %>
         </main>
     </body>
