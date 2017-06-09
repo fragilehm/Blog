@@ -1,17 +1,8 @@
 <section class="comments">
     <% entry.comments.forEach(comment => { %>
         <div class="comment">
-            <p class="login"><%= comment.user.login %> <span class="lastupdate">
-    
-            <%= comment.updatedAt %></span>  
-            <% if (admin || comment.user.id == userId) { %>
-            		:
-        			<a href="/entry/<%= entry.id %>/comment/<%= comment.id %>/update">update</a>
-        			|
-        			<a href="/entry/<%= entry.id %>/comment/<%= comment.id %>/delete">x</a>
-            <% } %></p>
             <p><%= comment.content %></p>
-           
         </div>
     <% }) %>
 </section>
+

@@ -4,11 +4,9 @@
     <body>
         <main>
             <% include partials/header %>
-            <% if (!comment) { %>
-                <% include partials/entry-form %>
-            <% } else { %>
-                <% include partials/comment-form %>
-            <% } %>
+            <% include partials/error-box %>
+            <% include partials/login-form %>
+            <% include partials/registration %>
             <% include partials/footer %>
         </main>
     </body>
