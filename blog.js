@@ -72,14 +72,37 @@ const database = new Sequelize(databaseName, databaseUser, databasePassword, {
 
 // });
 
+// const Entry = database.define('entry', {
+//     'title': {
+//         'type': Sequelize.STRING,
+//         'allowNull': false
+//     },
+//     'content': {
+//         'type': Sequelize.STRING,
+//         'allowNull': false
+//     }
+// });
+
 const Entry = database.define('entry', {
-    'title': {
+    'PhoneNumber': {
         'type': Sequelize.STRING,
         'allowNull': false
     },
-    'content': {
+    'Problem_Type': {
         'type': Sequelize.STRING,
         'allowNull': false
+    },
+    'Content': {
+        'type': Sequelize.STRING,
+        'allowNull': false
+    },
+    'Photo': {
+        'type': Sequelize.STRING,
+        'allowNull': true
+    },
+    'Location': {
+        'type': Sequelize.STRING,
+        'allowNull': true
     }
 });
 
@@ -89,10 +112,12 @@ const Comment = database.define('comment', {
         'allowNull': false
     }
 });
-
-//User.hasMany(Comment);
 Entry.hasMany(Comment);
 Comment.belongsTo(Entry);
+
+//User.hasMany(Comment);
+//Entry.hasMany(Comment);
+//Comment.belongsTo(Entry);
 
 const server = express();
 server.set('view engine', 'ejs');
@@ -113,99 +138,8 @@ server.use((request, response, next) => {
     next();
 });
 
-// server.get('/details', (request, response) => {
-//     response.render('details', {
-//         'session': request.session
-//     });
-// });
-
-
-// server.get('/login', (request, response) => {
-//     response.render('login', {
-//         'session': request.session
-//     });
-// });
-
-// server.post('/login', (request, response) => {
-//     const destination = '/';
-
-//     const login = request.body['login'];
-//     if (!login) {
-//         request.session.errors.push('The login was not provided.')
-//     }
-
-//     const password = request.body['password'];
-//     if (!password) {
-//         request.session.errors.push('The password was not provided.')
-//     }
-
-//     if (request.session.errors.length > 0) {
-//         response.redirect(destination);
-
-//         return;
-//     }
-
-//     User.findOne({ 'where': { 'login': login } }).then(user => {
-//         if (!bcrypt.compareSync(password, user.credentials)) {
-//             request.session.errors.push('The login or password is not valid.')
-//             response.redirect(destination);
-
-//             return;
-//         }
-
-//         request.session.userID = user.id;
-//         request.session.authorized = true;
-//         request.session.administrator = user.administrator;
-//         response.redirect(destination);
-//     }).catch(error => {
-//         console.error(error);
-
-//         request.session.errors.push('Incorrect username or password')
-//         response.redirect(destination);
-
-//         return;
-//     })
-// });
-
-// server.post('/registrate', (request, response) => {
-//     const destination = '/';
-
-//     const firstname = request.body['firstname'];
-//     const lastname = request.body['lastname'];
-//     const login = request.body['login'];
-//     const password = request.body['password'];
-//     const email = request.body['email'];
-
-//     const credentials =
-//          bcrypt.hashSync(password, bcryptSaltLength);
-
-//     User.create({
-//         'firstname': firstname,
-//         'lastname': lastname,
-//         'login': login,
-//         'credentials': credentials,
-//         'email': email
-//     }).then(user => {
-//         request.session.userID = user.id;
-//         request.session.authorized = true;
-//         request.session.administrator = user.administrator;
-//         response.redirect(destination);
-//     }).catch(error => {
-//         console.error(error);
-//         request.session.errors.push('User already exists');
-//         response.redirect(destination);
-//     });
-//     return;
-// });
-
-// server.post('/logout', (request, response) => {
-//     request.session.regenerate(() => {
-//         response.redirect('/');
-//     });
-// });
-
 server.get(['/', 'entries'], (request, response) => {
-    Entry.findAll({order: '"updatedAt" DESC' }
+    Entry.findAll({order: '"createdAt" DESC' }
         ).then(entries => {
         response.render('entries', {
             'entries': entries
@@ -249,15 +183,7 @@ server.get(['/entry/create', '/entry/:id/update'], (request, response) => {
 });
 
 server.post(['/entry/create', '/entry/:id/update'], (request, response) => {
-    // if (!request.session.authorized) {
-    //     response.status(401).end('Unauthorized');
-    //     return;
-    // }
-
-    // if (!request.session.administrator) {
-    //     response.status(403).end('Forbidden');
-    //     return;
-    // }
+   
     const destination = request.header('Referer') || '/entries';
 
     let id = undefined;
@@ -270,21 +196,11 @@ server.post(['/entry/create', '/entry/:id/update'], (request, response) => {
             return;
         }
     }
-
-    const title = request.body['title'];
-    if (!title) {
-        request.session.errors.push('The entry title must be specified.');
-    }
-
-    const content = request.body['content'];
-    if (!content) {
-        request.session.errors.push('The entry content must be specified.');
-    }
-
-    if (request.session.errors.length > 0) {
-        response.redirect(destination);
-        return;
-    }
+    const PhoneNumber = request.body['phoneNumber'];
+    const Problem_Type = request.body['problemType'];
+    const Photo = request.body['photo'];
+    const Content = request.body['content'];
+    const Location = request.body['location'];
 
     if (id) {
         Entry.update({
@@ -302,9 +218,13 @@ server.post(['/entry/create', '/entry/:id/update'], (request, response) => {
             response.redirect(`/entry/${id}`);
         });
     } else {
+        console.log("------------------")
         Entry.create({
-            'title': title,
-            'content': content
+            'PhoneNumber': PhoneNumber,
+            'Problem_Type': Problem_Type,
+            'Content': Content,
+            'Photo': Photo,
+            'Location': Location
         }).then(entry => {
             response.redirect(`/entry/${entry.id}`);
         }).catch(error => {

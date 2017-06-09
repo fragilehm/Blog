@@ -8,7 +8,8 @@
                 <ul>
                     <% for (let [id, entry] of Object.entries(entries)) { %>
                         <li>
-                            <a href='/entry/<%= entry.id %>'><%= entry.title %></a>
+                            <a href='/entry/<%= entry.id %>'><%= entry.Problem_Type %></a>
+                            <p><%= entry.Content %></p>
                             <span class="lastupdate"><%= entry.updatedAt %></span>
                     <% } %>
                 </ul>

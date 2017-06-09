@@ -1,5 +1,12 @@
 <form method="POST" action="<%= entry && entry.id ? `/entry/${entry.id}/update` : '/entry/create' %>">
-    <input type="text" name="title" placeholder="Enter the title" value="<%= entry ? entry.title : '' %>" required><br>
-    <textarea name="content" rows="20" cols="40" placeholder="Enter the blog entry" required><%= entry ? entry.content : '' %></textarea><br>
+    
+	<input type="text" name="phoneNumber" placeholder="phone number" value="<%= entry ? entry.PhoneNumber : '' %>" 			required><br>
+	<input type="text" name="problemType" placeholder="Problem Type" value="<%= entry ? entry.ProblemType : '' %>" 	
+		required><br>
+    <textarea name="content" rows="20" cols="40" placeholder="Enter content" required><%= entry ? entry.Content : '' %></textarea><br>
+    <input type="text" name="photo" placeholder="Choose a photo" value="<%= entry ? entry.Photo : '' %>" required><br>
+
+    <input type="text" name="location" placeholder="Enter the title" value="<%= entry ? entry.Location : '' %>" required><br>
+
     <input type="submit" value="<%= entry ? 'Update the Blog Entry' : 'Create the Blog Entry' %>">
 </form>
