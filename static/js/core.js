@@ -38,10 +38,6 @@ function myFunction(){
             setImage.src = reader.result;
             var base64 = reader.result ;
             imageLink.value = fileName;
-
-            image.setAttribute("href", base64);
-            image.setAttribute("download", fileName);
-            image.click();
         }
         reader.readAsDataURL(file);
     }
