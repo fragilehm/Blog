@@ -1,0 +1,84 @@
+
+use compliants;
+
+drop table comments;
+drop table entries;
+
+CREATE TABLE entries (
+    ID int NOT NULL AUTO_INCREMENT,
+    PhoneNumber varchar(50) NOT NULL,
+	Problem_Type varchar(100) NOT NULL,
+	ProblemRegion varchar(100) NOT NULL,
+	Content varchar(5000) NOT NULL,
+	Photo varchar(1000),
+	Location varchar(200),
+	CreatedAt datetime default CURRENT_TIMESTAMP,	
+	updatedAt datetime default CURRENT_TIMESTAMP,
+    PRIMARY KEY (ID)
+);
+create table comments(
+   id INT NOT NULL AUTO_INCREMENT,
+   content VARCHAR(500) NOT NULL,
+   createdAt datetime default CURRENT_TIMESTAMP,
+   updatedAt datetime default CURRENT_TIMESTAMP,
+   entryId INT,
+   PRIMARY KEY (id),
+   FOREIGN KEY (id) REFERENCES entries(id)
+);
+/*
+CREATE TABLE TypeOfProblem (
+    ID int NOT NULL AUTO_INCREMENT,
+	TypeName varchar(100) NOT NULL,
+    PRIMARY KEY (ID)
+);
+
+
+CREATE TABLE Officials (
+    ID int NOT NULL AUTO_INCREMENT,
+	Name varchar(100) NOT NULL,
+	Email varchar(100),
+    PRIMARY KEY (ID)
+);
+
+create table entries(
+   id INT NOT NULL AUTO_INCREMENT,
+   title VARCHAR(255) NOT NULL,
+   content VARCHAR(255) NOT NULL,
+   createdAt datetime default CURRENT_TIMESTAMP,
+   updatedAt datetime default CURRENT_TIMESTAMP,
+   PRIMARY KEY (id)
+
+);
+
+drop table comments;
+create table comments(
+   id INT NOT NULL AUTO_INCREMENT,
+   content VARCHAR(500) NOT NULL,
+   createdAt datetime default CURRENT_TIMESTAMP,
+   updatedAt datetime default CURRENT_TIMESTAMP,
+   entryId INT,
+   PRIMARY KEY (id),
+   FOREIGN KEY (id) REFERENCES entries(id)
+
+
+);
+
+drop table news;
+#drop table user;
+
+create table news(
+   id INT NOT NULL AUTO_INCREMENT,
+   title VARCHAR(500) NOT NULL UNIQUE,
+   content VARCHAR(5000) NOT NULL,
+   imageLink VARCHAR(5000) NOT NULL,
+   source VARCHAR(1000) NOT NULL,
+   createdAt VARCHAR(100) NOT NULL,
+   updatedAt datetime default CURRENT_TIMESTAMP,
+   PRIMARY KEY (id)
+
+);*/
+
+/*
+INSERT INTO `news` (`id`,`title`,`content`,`imageLink`,`source`,`createdAt`,`updatedAt`) VALUES (DEFAULT, 'Renault делает ставку на Россию', 'Renault делает серьезные ставки на российский рынок, падение которого не отпугнуло инвесторов и не помешало увеличить долю участия в Lada. Сегодня речь о потере денег уже не идет. После многолетнего коллапса рынок начинает оживать. Глава Альянса Renault-Nissan убежден, что рынок в России стоит на пороге роста. Со временем он может занять первое место в Европе, опередив Германию.', 'http://inosmi.ru/images/23610/96/236109621.jpg','Al Wasat','2017-06-09 14:06:48','2017-06-09 14:06:48');
+*/
+
