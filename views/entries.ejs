@@ -1,22 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<!--
+    Prism by TEMPLATED
+    templated.co @templatedco
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+    <head>
+        <title>Prism by TEMPLATED</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    </head>
     <% include partials/header %>
     <body>
-        <main>
-            <% include partials/head %>
-            <article>
-                <ul>
-                    <% for (let [id, entry] of Object.entries(entries)) { %>
-                        <li>
-                            <a href='/entry/<%= entry.id %>'><%= entry.Problem_Type %></a>
-                            <p><%= entry.Content %></p>
-                            <span class="lastupdate"><%= entry.updatedAt %></span>
-                    <% } %>
-                </ul>
-            </article>
-            <% include partials/entries-toolbar %>
-            <% include partials/footer %>
-        </main>
+        <!-- Two -->
+        <% include partials/head %>
+
+            <section id="two" class="wrapper style2 alt">
+                <% for (let [id, entry] of Object.entries(entries)) { %>
+                    <div class="inner">
+                        <div class="spotlight">
+                            
+                            <div class="image">
+                                <img src="images/pic01.jpg" alt="" />
+                            </div>
+                            <div class="content">
+                                <h3><%= entry.Problem_Type %></h3>
+                                <p><%= entry.Content %></p>
+                                <ul class="actions">
+                                    <li><a href='/entry/<%= entry.id %>' class="button alt">Читать дальше</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                <% } %> 
+            </section>
+        <% include partials/entries-toolbar %>
+        <% include partials/footer %>
+
+        <!-- Scripts -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/skel.min.js"></script>
+            <script src="assets/js/util.js"></script>
+            <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+            <script src="assets/js/main.js"></script>
+
     </body>
 </html>
-

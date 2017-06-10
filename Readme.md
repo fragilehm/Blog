@@ -1,3 +1,7 @@
+<!-- <div class="image">
+                            <img src="post_images/<%= posts[i].image %>" alt="" />
+                        </div> -->
+
 Blog
 ====
 

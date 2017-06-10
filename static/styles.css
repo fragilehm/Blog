@@ -1,42 +1,40 @@
-body {
-    font: 16px arial, sans-serif;
-    background-color:  #fff;
-}
+html, body, div, span, object, iframe, img, strong, b, u, i, table, tbody, tfoot, thead, td, th, tr form, label, legend, header, footer, article, section, aside { margin: 0; padding: 0; border: 0; vertical-align: baseline; background: transparent; }
 
-.toolbar input[type="submit"] {
-    background: none!important;
-    color: blue;
-    border: none;
-    padding: 0!important;
-    font: inherit;
-    cursor: pointer;
-}
-a {
-    text-decoration: unset;
-}
-.error {
-    padding: 1em;
-    border: 0.1em dashed red;
-    background-color: hsl(100, 100%, 90%);
-}
+input:focus, select:focus, textarea:focus { outline: none; }
 
-.comment > .login {
-    font-weight: bold;
-}
-span.lastupdate {
-    font-weight: normal;
-    float: right;
-    font-size: 0.7em;
-}
-p.error {
-    color: red;
-    background-color: cyan;
-    border: 0;
-}
-footer {
-    float: right;
-}
-.loginout {
-    float: right;
-    font-size: 1.2em;
-}
+* { box-sizing: border-box; }
+
+table, td, th, tr { border-collapse: collapse; border-spacing: 0; }
+
+html, body { width: 100%; height: 100%; }
+
+input, select, textarea { font-family: arial, helvetica, sans-serif; font-weight: 400; color: #000; }
+
+button { font-family: arial, helvetica, sans-serif; font-weight: 400; color: #000; cursor: pointer; }
+
+input[type="button"], input[type="submit"] { cursor: pointer; }
+
+.clear { clear: both; font-size: 0; }
+
+.clearfix::after { clear: both; content: ""; display: table; }
+
+body { font-family: "Open Sans", arial, sans-serif; font-size: 14px; font-weight: 500; line-height: 1.3; background: #fff; color: #000; min-width: 640px; }
+body .complaints_form h2 { font-family: "Cormorant SC", serif; font-weight: normal; font-size: 33px; text-align: center; padding-bottom: 10px; margin: 0; color: #fff; background: #2f424f; }
+body .complaints_form .container { width: 1000px; margin: 0 auto; padding: 50px; position: relative; }
+body .complaints_form .container .image_block { text-align: center; }
+body .complaints_form .container .image_block img { display: inline-block; }
+body .complaints_form .container .content form { width: 600px; padding: 0 60px; margin: 0 auto; }
+body .complaints_form .container .content form p { font-size: 17px; }
+body .complaints_form .container .content form input, body .complaints_form .container .content form select, body .complaints_form .container .content form textarea, body .complaints_form .container .content form button { font-family: "Cormorant SC", serif; font-size: 16px; color: #373737; width: 100%; height: 37px; padding: 5px 10px; background: #e1e5e8; border: 1px solid #ccc; outline: none; }
+body .complaints_form .container .content form input[type="file"], body .complaints_form .container .content form select[type="file"], body .complaints_form .container .content form textarea[type="file"], body .complaints_form .container .content form button[type="file"] { float: left; height: 42px; width: 42px; color: #fff; padding: 0; background: none; border: none; cursor: pointer; background: #64bc4c; margin-bottom: 10px; position: relative; }
+body .complaints_form .container .content form input[type="file"]::-webkit-file-upload-button, body .complaints_form .container .content form select[type="file"]::-webkit-file-upload-button, body .complaints_form .container .content form textarea[type="file"]::-webkit-file-upload-button, body .complaints_form .container .content form button[type="file"]::-webkit-file-upload-button { visibility: hidden; display: none; }
+body .complaints_form .container .content form input[type="file"]::before, body .complaints_form .container .content form select[type="file"]::before, body .complaints_form .container .content form textarea[type="file"]::before, body .complaints_form .container .content form button[type="file"]::before { content: "+"; font-size: 30px; font-weight: bold; width: 20px; position: absolute; top: 5px; left: 13px; }
+body .complaints_form .container .content form input ::-webkit-input-placeholder, body .complaints_form .container .content form input ::-moz-placeholder, body .complaints_form .container .content form input :-ms-input-placeholder, body .complaints_form .container .content form select ::-webkit-input-placeholder, body .complaints_form .container .content form select ::-moz-placeholder, body .complaints_form .container .content form select :-ms-input-placeholder, body .complaints_form .container .content form textarea ::-webkit-input-placeholder, body .complaints_form .container .content form textarea ::-moz-placeholder, body .complaints_form .container .content form textarea :-ms-input-placeholder, body .complaints_form .container .content form button ::-webkit-input-placeholder, body .complaints_form .container .content form button ::-moz-placeholder, body .complaints_form .container .content form button :-ms-input-placeholder { font-family: "Cormorant SC", serif; font-size: 16px; }
+body .complaints_form .container .content form select option { background: #c9e2ec; color: #000; }
+body .complaints_form .container .content form textarea { height: 100px; resize: none; }
+body .complaints_form .container .content form button.send_complaint_btn { height: auto; font-size: 17px; text-transform: uppercase; border: 1px solid #f36a4a; padding: 10px; background: #f36a4a; color: #fff; }
+body .complaints_form .container .content form .upload_file #demo { float: left; font-size: 15px; display: inline-block; margin: 0 0 10px 10px; }
+body .complaints_form .container .content form .upload_file .tip { font-style: italic; font-size: 15px; font-weight: bold; margin-top: 0; }
+body .complaints_form .container .content form .upload_file img { max-width: 300px; height: auto; overflow: hidden; margin: 0 0 10px 10px; }
+body .complaints_list h2 { font-family: "Cormorant SC", serif; font-weight: normal; font-size: 33px; text-align: center; padding-bottom: 10px; margin: 0; color: #fff; background: #f7725d; }
+body .complaints_list .container { width: 1000px; margin: 0 auto; padding: 50px; position: relative; }

@@ -42,47 +42,6 @@ const database = new Sequelize(databaseName, databaseUser, databasePassword, {
     }
 });
 
-// const User = database.define('user', {
-//     'firstname': {
-//         'type': Sequelize.STRING,
-//         'allowNull': false,
-//     },
-//     'lastname': {
-//         'type': Sequelize.STRING,
-//         'allowNull': false,
-//     },
-//     'login': {
-//         'type': Sequelize.STRING,
-//         'allowNull': false,
-//         'unique': true
-//     },
-//     'credentials': {
-//         'type': Sequelize.STRING,
-//         'allowNull': false
-//     },
-//     'administrator': {
-//         'type': Sequelize.BOOLEAN,
-//         'allowNull': false,
-//         'defaultValue': false
-//     },
-//     'email': {
-//         'type': Sequelize.STRING,
-//         'allowNull': false
-//     }
-
-// });
-
-// const Entry = database.define('entry', {
-//     'title': {
-//         'type': Sequelize.STRING,
-//         'allowNull': false
-//     },
-//     'content': {
-//         'type': Sequelize.STRING,
-//         'allowNull': false
-//     }
-// });
-
 const Entry = database.define('entry', {
     'PhoneNumber': {
         'type': Sequelize.STRING,
@@ -114,10 +73,6 @@ const Comment = database.define('comment', {
 });
 Entry.hasMany(Comment);
 Comment.belongsTo(Entry);
-
-//User.hasMany(Comment);
-//Entry.hasMany(Comment);
-//Comment.belongsTo(Entry);
 
 const server = express();
 server.set('view engine', 'ejs');
@@ -201,6 +156,7 @@ server.post(['/entry/create', '/entry/:id/update'], (request, response) => {
     const Photo = request.body['photo'];
     const Content = request.body['content'];
     const Location = request.body['location'];
+    console.log(PhoneNumber + "  " + Problem_Type + " " + Content + " " + Location);
 
     if (id) {
         Entry.update({
@@ -303,11 +259,6 @@ server.get([
 , (request, response) => {
     const previousLocation = request.header('Referer') || '/entries';
 
-    // if (!request.session.authorized) {
-    //     response.status(401).end('Unauthorized');
-
-    //     return;
-    // }
     const destination = request.header('Referer') || '/entries';
 
     id = request.params['id'];
@@ -320,7 +271,6 @@ server.get([
 
         return;
     }
-
     const entryID = request.params['entryID'];
     if (!entryID) {
         request.session.errors.push('The owning blog entry is not specified.');
