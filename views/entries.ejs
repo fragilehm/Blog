@@ -17,6 +17,7 @@
     <body>
         <!-- Two -->
         <% include partials/head %>
+        <% include partials/entries-toolbar %>
 
             <section id="two" class="wrapper style2 alt">
                 <% for (let [id, entry] of Object.entries(entries)) { %>
@@ -37,7 +38,6 @@
                     </div>
                 <% } %> 
             </section>
-        <% include partials/entries-toolbar %>
         <% include partials/footer %>
 
         <!-- Scripts -->

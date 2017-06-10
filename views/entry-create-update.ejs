@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/media.css">
 </head>
+<% include partials/header %>
 <body onload="myFunction()">
+
     <div class="complaints_form">
         <h2>Создать жалобу</h2>
         <div class="container">
             <div class="image_block">
-                <img src="upload/complaint_form_img.png" alt="Complaint form blank image">
+                <img src="/images/complaint_form_img.png" alt="Complaint form blank image">
             </div>
             <div class="content">
                 <form method="POST" action="<%= entry && entry.id ? `/entry/${entry.id}/update` : '/entry/create' %>">
@@ -96,7 +98,7 @@
         </div>
     </div>
     <script src="vendor/jquery/jquery-1.12.4.min.js"></script>
-    <script src="js/core.js"></script>
+    <script src="/js/core.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/autosize.js/3.0.15/autosize.min.js'></script>
 </body>
 </html>

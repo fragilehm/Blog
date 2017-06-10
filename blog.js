@@ -62,7 +62,12 @@ const Entry = database.define('entry', {
     'Location': {
         'type': Sequelize.STRING,
         'allowNull': true
+    },
+    'ProblemRegion': {
+        'type': Sequelize.STRING,
+        'allowNull': true
     }
+    
 });
 
 const Comment = database.define('comment', {
@@ -93,7 +98,7 @@ server.use((request, response, next) => {
     next();
 });
 
-server.get(['/', 'entries'], (request, response) => {
+server.get(['/', '/entries'], (request, response) => {
     Entry.findAll({order: '"createdAt" DESC' }
         ).then(entries => {
         response.render('entries', {
@@ -155,7 +160,11 @@ server.post(['/entry/create', '/entry/:id/update'], (request, response) => {
     const Problem_Type = request.body['problemType'];
     const Photo = request.body['photo'];
     const Content = request.body['content'];
-    const Location = request.body['location'];
+    const Location = request.body['location'];    
+    const ProblemRegion = request.body['problemRegion'];
+
+    
+
     console.log(PhoneNumber + "  " + Problem_Type + " " + Content + " " + Location);
 
     if (id) {
@@ -180,9 +189,11 @@ server.post(['/entry/create', '/entry/:id/update'], (request, response) => {
             'Problem_Type': Problem_Type,
             'Content': Content,
             'Photo': Photo,
-            'Location': Location
+            'Location': Location,
+            'ProblemRegion': ProblemRegion
+
         }).then(entry => {
-            response.redirect(`/entry/${entry.id}`);
+            response.redirect('/entries');
         }).catch(error => {
             console.error(error);
             request.session.errors.push('Failed to create a new blog entry.');
