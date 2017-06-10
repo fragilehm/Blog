@@ -1,6 +1,5 @@
 const path =
     require('path');
-
 const express =
     require('express');
 const bodyParser =
@@ -47,7 +46,7 @@ const Entry = database.define('entry', {
         'type': Sequelize.STRING,
         'allowNull': false
     },
-    'Problem_Type': {
+    'Title': {
         'type': Sequelize.STRING,
         'allowNull': false
     },
@@ -60,10 +59,6 @@ const Entry = database.define('entry', {
         'allowNull': true
     },
     'Location': {
-        'type': Sequelize.STRING,
-        'allowNull': true
-    },
-    'ProblemRegion': {
         'type': Sequelize.STRING,
         'allowNull': true
     }
@@ -94,11 +89,17 @@ server.use((request, response, next) => {
     if (!request.session.errors) {
         request.session.errors = [];
     }
-
     next();
 });
 
-server.get(['/', '/entries'], (request, response) => {
+
+server.get(['/', '/main'], (request, response) => {
+    response.render('main', {
+        'entries': null
+    });
+});
+
+server.get('/entries', (request, response) => {
     Entry.findAll({order: '"createdAt" DESC' }
         ).then(entries => {
         response.render('entries', {
@@ -111,89 +112,88 @@ server.get(['/', '/entries'], (request, response) => {
     });
 });
 
-server.get(['/entry/create', '/entry/:id/update'], (request, response) => {
+server.get('/entry/create', (request, response) => {
    
-    const previousLocation = request.header('Referer') || '/entries';
+   // const previousLocation = request.header('Referer') || '/entries';
 
     let entry = undefined;
-    if (request.path === '/entry/create') {
-        response.render('entry-create-update', {
-            'entry': null,
-            'comment': null
-        });
-    } else {
-        id = request.params['id'];
-        if (!id) {
-            request.session.errors.push('The blog entry is unknown.');
-            response.redirect(previousLocation);
-            return;
-        }
-        Entry.findById(id).then(entry => {
-            response.render('entry-create-update', {
-                'entry': entry,
-                'comment': null
-            });
-        }).catch(error => {
-            console.error(error);
-            request.session.errors.push('Failed to find the specified blog entry.')
-            response.redirect(previousLocation);
-        });
-    }
+    response.render('entry-create-update', {
+        'entry': null,
+        'comment': null
+    });
+    // } else {
+    //     id = request.params['id'];
+    //     if (!id) {
+    //         request.session.errors.push('The blog entry is unknown.');
+    //         response.redirect(previousLocation);
+    //         return;
+    //     }
+    //     Entry.findById(id).then(entry => {
+    //         response.render('entry-create-update', {
+    //             'entry': entry,
+    //             'comment': null
+    //         });
+    //     }).catch(error => {
+    //         console.error(error);
+    //         request.session.errors.push('Failed to find the specified blog entry.')
+    //         response.redirect(previousLocation);
+    //     });
+    // }
 });
 
-server.post(['/entry/create', '/entry/:id/update'], (request, response) => {
+server.post('/entry/create', (request, response) => {
    
     const destination = request.header('Referer') || '/entries';
 
-    let id = undefined;
-    if (!request.path.endsWith('/create')) {
-        id = request.params['id'];
-        if (!id) {
-            request.session.errors.push('The blog entry is unknown.');
-            response.redirect(destination);
+    // let id = undefined;
+    // if (!request.path.endsWith('/create')) {
+    //     id = request.params['id'];
+    //     if (!id) {
+    //         request.session.errors.push('The blog entry is unknown.');
+    //         response.redirect(destination);
 
-            return;
-        }
-    }
+    //         return;
+    //     }
+    // }
     const PhoneNumber = request.body['phoneNumber'];
-    const Problem_Type = request.body['problemType'];
+    const Title = request.body['title'];
     const Photo = request.body['photo'];
     const Content = request.body['content'];
     const Location = request.body['location'];    
     const ProblemRegion = request.body['problemRegion'];
 
-    if (id) {
-        Entry.update({
-            'title': title,
-            'content': content
-        }, {
-            'where': {
-                'id': id
-            }
-        }).then(result => {
-            response.redirect(`/entry/${id}`);
-        }).catch(error => {
-            console.error(error);
-            request.session.errors.push('Failed to update a new blog entry.');
-            response.redirect(`/entry/${id}`);
-        });
-    } else {
-        Entry.create({
-            'PhoneNumber': PhoneNumber,
-            'Problem_Type': Problem_Type,
-            'Content': Content,
-            'Photo': Photo,
-            'Location': Location,
-            'ProblemRegion': ProblemRegion
+    // if (id) {
+    //     Entry.update({
+    //         'title': title,
+    //         'content': content
+    //     }, {
+    //         'where': {
+    //             'id': id
+    //         }
+    //     }).then(result => {
+    //         response.redirect(`/entry/${id}`);
+    //     }).catch(error => {
+    //         console.error(error);
+    //         request.session.errors.push('Failed to update a new blog entry.');
+    //         response.redirect(`/entry/${id}`);
+    //     });
+    // } else {
+    Entry.create({
+        'PhoneNumber': PhoneNumber,
+        'Title': Title,
+        'Content': Content,
+        'Photo': Photo,
+        'Location': Location,
+        'ProblemRegion': ProblemRegion
 
-        }).then(entry => {
-            response.redirect('/entries');
-        }).catch(error => {
-            console.error(error);
-            request.session.errors.push('Failed to create a new blog entry.');
-            response.redirect(destination);
-        });
-    }
+    }).then(entry => {
+        response.redirect('/entries');
+    }).catch(error => {
+        console.error(error);
+        request.session.errors.push('Failed to create a new blog entry.');
+        response.redirect(destination);
+    });
+    //}
 });
 
 // server.post('/entry/:id/delete', (request, response) => {

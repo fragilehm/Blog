@@ -1,0 +1,87 @@
+.complaints_form
+	h2 
+		+title
+		color: #fff
+		background: #2f424f
+		span 
+			transition: all 1s ease-in-out
+	.container
+		padding-left: 150px
+		padding-right: 150px
+		.image_block
+			text-align: center
+			img 
+				+image
+				+position(-125px, 0, 0, 50%)
+				margin-left: -125px
+		.content
+			form 
+				width: 600px
+				padding: 0 60px
+				margin: 0 auto
+				p 
+					font-size: 17px
+				input, select, textarea, button
+					+inputs
+					&[type="file"]
+						float: left
+						height: 42px
+						width: 42px
+						color: #fff
+						padding: 0
+						background: none
+						border: none
+						cursor: pointer
+						background: #64bc4c
+						margin-bottom: 10px
+						position: relative
+						&::-webkit-file-upload-button
+							visibility: hidden
+							display: none
+						&::before 
+							content: "+"
+							font-size: 30px
+							font-weight: bold
+							width: 20px
+							position: absolute
+							top: 5px
+							left: 13px
+					::-webkit-input-placeholder, ::-moz-placeholder, :-ms-input-placeholder   
+						font-family: 'Cormorant SC', serif
+						font-size: 16px
+				select
+					text-overflow: ellipsis
+					text-wrap: nowrap
+					overflow: hidden
+					option 
+						background: #c9e2ec
+						color: #000
+				textarea
+					height: 100px
+					resize: none
+				button
+					&.send_complaint_btn
+						height: auto
+						font-size: 19px
+						border: 1px solid #f36a4a
+						padding: 10px
+						background: #f36a4a
+						color: #fff
+						.big 
+							font-size: 30px
+				.upload_file
+					#demo 
+						float: left
+						font-size: 15px
+						display: inline-block
+						margin: 0 0 10px 10px
+					.tip 
+						font-style: italic 
+						font-size: 15px
+						font-weight: bold
+						margin-top: 0
+					img 
+						max-width: 300px
+						height: auto
+						overflow: hidden
+						margin: 0 0 10px 10px		

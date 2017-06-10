@@ -1,50 +1,130 @@
-<!DOCTYPE HTML>
-<!--
-    Prism by TEMPLATED
-    templated.co @templatedco
-    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-    </head>
-    <% include partials/header %>
-    <body>
-        <!-- Two -->
-        <% include partials/head %>
-        <% include partials/entries-toolbar %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uberi</title>
+    <link rel="shortcut icon" sizes="16x16 24x24 32x32 36x36 48x48 57x57 60x60 64x64 70x70 72x72 76x76 96x96 114x114 120x120 144x144 150x150 152x152 180x180 192x192 310x150 310x310" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700|family=Cormorant+SC:300,400,500,600,700|Cormorant+Unicase:300,400,500,600,700&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/media.css">
+</head>
+<body onload="myFunction()">
+    <header>
+        <div class="menu_list">
+            <ul>
+                <li><a href="main"><i class="fa fa-home" aria-hidden="true"></i><span>Главная</span></a></li>
+                <li><a href="entries"><i class="fa fa-tasks" aria-hidden="true"></i><span>Проблемы</span></a></li>
+                <li><a href="entry/create"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span>Форма</span></a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="complaints_list main_content">
+        <div class="container">
+            <div class="image_block">
+                <img src="upload/ic_Uberi.png" alt="Complaint form blank image">
+            </div>
+            <p class="sort">Критерии сортировки:</p>
+            <div class="filter_block clearfix">
+                <select name="type" id="filter_by_type">
+                    <option selected disabled>Службы</option>
+                    <option value="">МУНИЦИПАЛЬНОЕ ПРЕДПРИЯТИЕ «ЗЕЛЕНСТРОЙ»</option>
+                    <option value="">УПРАВЛЕНИЕ МУНИЦИПАЛЬНОЙ СОБСТВЕННОСТИ МЭРИИ ГОРОДА БИШКЕК</option>
+                    <option value="">УПРАВЛЕНИЕ ГОСУДАРСТВЕННОЙ ПРОТИВОПОЖАРНОЙ СЛУЖБЫ</option>
+                    <option value="">Управление социального развития мэрии города Бишкек</option>
+                    <option value="">УПРАВЛЕНИЕ ОБРАЗОВАНИЯ МЭРИИ ГОРОДА БИШКЕК</option>
+                    <option value="">УПРАВЛЕНИЕ ГОРОДСКОГО ТРАНСПОРТА МЭРИИ ГОРОДА БИШКЕК</option>
+                    <option value="">УПРАВЛЕНИЕ ЖИЛИЩНО-КОММУНАЛЬНОГО ХОЗЯЙСТВА И СИСТЕМЫ ЖИЗНЕОБЕСПЕЧЕНИЯ МЭРИИ ГОРОДА БИШКЕК</option>
+                    <option value="">Бишкекглавархитетура</option>
+                    <option value="">БИШКЕКСКОЕ ТРОЛЛЕЙБУСНОЕ УПРАВЛЕНИЕ</option>
+                    <option value="">ФИЛИАЛ «БИШКЕКГАЗ» ОСОО «ГАЗПРОМ КЫРГЫЗСТАН»</option>
+                    <option value="">МУНИЦИПАЛЬНОЕ ПРЕДПРИЯТИЕ «БИШКЕКСВЕТ»</option>
+                    <option value="">МУНИЦИПАЛЬНОЕ ПРЕДПРИЯТИЕ «БИШКЕКГОРЛИФТ»</option>
+                    <option value="">МУНИЦИПАЛЬНОЕ ПРЕДПРИЯТИЕ «БИШКЕКСКОЕ ПАССАЖИРСКОЕ АВТОТРАНСПОРТНОЕ ПРЕДПРИЯТИЕ»</option>
+                    <option value="">МУНИЦИПАЛЬНОЕ ПРЕДПРИЯТИЕ «БИШКЕКГОРЛИФТ»</option>
+                    <option value="">МУНИЦИПАЛЬНОЕ ПРЕДПРИЯТИЕ «ТАЗАЛЫК»</option>
+                    <option value="">ДЕПАРТАМЕНТ ЗДРАВООХРАНЕНИЯ МЭРИИ ГОРОДА БИШКЕК</option>
+                    <option value="">УПРАВЛЕНИЕ ЗЕМЛЕПОЛЬЗОВАНИЯ И СТРОИТЕЛЬСТВА МЭРИИ Г.БИШКЕК</option>
+                    <option value="">ПРОИЗВОДСТВЕННО-ЭКСПЛУАТАЦИОННОЕ УПРАВЛЕНИЕ «БИШКЕКВОДОКАНАЛ»</option>
+                    <option value="">САНИТАРНО-ЭКОЛОГИЧЕСКАЯ ИНСПЕКЦИЯ МЭРИИ ГОРОДА БИШКЕК</option>
+                    <option value="">СПЕЦИАЛИЗИРОВАННОЕ МОНТАЖНО-ЭКСПЛУАТАЦИОННОЕ УПРАВЛЕНИЕ ДПС МВД КР</option>
+                    <option value="">КОММУНАЛЬНОЕ ПРЕДПРИЯТИЕ «БИШКЕКТЕПЛОЭНЕРГО» МЭРИИ ГОРОДА БИШКЕК</option>
+                    <option value="">ОАО "БИШКЕКТЕПЛОСЕТЬ»</option>
+                    <option value="">ОАО «СЕВЕРЭЛЕКТРО»</option>
+                    <option value="">ЦЕНТР ГОСУДАРСТВЕННОГО САНИТАРНО-ЭПИДЕМИОЛОГИЧЕСКОГО НАДЗОРА ГОРОДА БИШКЕК</option>
 
-            <section id="two" class="wrapper style2 alt">
-                <% for (let [id, entry] of Object.entries(entries)) { %>
-                    <div class="inner">
-                        <div class="spotlight">
-                            
-                            <div class="image">
-                                <img src="/images/<%= entry.Photo %>" alt="" />
-                            </div>
-                            <div class="content">
-                                <h3><%= entry.Location %></h3>
-                                <p><%= entry.Content %></p>
-                                <ul class="actions">
-                                    <li><a href='/entry/<%= entry.id %>' class="button alt">Читать дальше</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                <% } %> 
-            </section>
-        <% include partials/footer %>
+                </select>
+                <select name="region" id="filter_by_region">
+                    <option  selected disabled>Район</option>
+                    <option value="Pervomayskiy">Первомайский</option>
+                    <option value="Oktyabrskiy">Октябрьский</option>
+                    <option value="Sverdlovskiy">Свердловский</option>
+                    <option value="Leninskiy">Ленинский</option>
+                </select>
+                <select name="date" id="filter_by_date">
+                    <option selected disabled>Дата</option>
+                    <option value="today">За сегодня</option>
+                    <option value="last 2 days">За прошедшие 2 дня</option>
+                    <option value="last week">За прошедшую неделю</option>
+                </select>
+                <select name="status" id="filter_by_status">
+                    <option selected disabled>Статус решения</option>
+                    <option class="happy" value="resolved">Решенные</option>
+                    <option class="sad" value="unresolved">Нерешённые</option>
+                </select>
+            </div>
+            <div class="complaint_problems">
+               <% for (let [id, entry] of Object.entries(entries)) { %>
 
-        <!-- Scripts -->
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/skel.min.js"></script>
-            <script src="assets/js/util.js"></script>
-            <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-            <script src="assets/js/main.js"></script>
-
-    </body>
+                   <div class="problem clearfix isResolved">
+                       <div class="status_image_block">
+                           <div class="wrapper">
+                               <img src="/images/<%= entry.Photo %>" alt="Problem status image">
+                           </div>
+                       </div>
+                       <div class="content">
+                           <h4><a href="main"><%= entry.Location %></a></h4>
+                           <p><%= entry.Content %></p>
+                       </div>
+                   </div>
+               <% } %> 
+                
+            </div>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery-1.12.4.min.js"></script>
+    <script src="js/core.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/autosize.js/3.0.15/autosize.min.js'></script>
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

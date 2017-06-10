@@ -1,0 +1,49 @@
+header 
+	width: 90px
+	height: 100%
+	position: fixed
+	top: 0
+	left: 0
+	background: #5cb7ea
+	border-right: 1px solid #5cb7ea
+	.logo_img 
+		width: 100%
+		overflow: hidden
+		a
+			img 
+				width: 100%
+				height: auto
+	.menu_list 
+		width: 100%
+		background: #5cb7ea
+		ul 
+			list-style: none
+			padding: 0
+			margin: 0
+			li 
+				width: 100%
+				display: block
+				border-bottom: 1px solid #fff
+				&.active, &:hover 
+					background: #fff
+					a 
+						color: #5cb7ea
+				&.inactive 
+					background: #5cb7ea
+					a 
+						color: #fff
+				a 
+					+link
+					color: #fff
+					display: block
+					padding: 25px 10px
+					text-align: center
+					i 
+						&.fa 
+							font-size: 30px
+							display: block
+							margin-bottom: 5px
+
+
+
+

@@ -1,0 +1,112 @@
+.complaints_list
+	h2
+		+title
+		color: #fff
+		background: #f7725d
+		span 
+			transition: all 1s ease-in-out
+	.container
+		padding-left: 150px
+		padding-right: 150px
+		.image_block
+			text-align: center
+			img 
+				+image
+				+position(-125px, 0, 0, 50%)
+				margin-left: -125px
+		.sort 
+			font-size: 17px
+		.filter_block
+			width: 100%
+			margin-bottom: 20px
+			select
+				+inputs
+				font-size: 19px
+				width: 25%
+				height: 40px
+				float: left
+				color: #fff
+				padding-left: 10px
+				padding-right: 10px
+				background: #41aee7
+				border-color: #fff !important
+				border-right: none 
+				&:last-child
+					border: 1px solid #4b4848
+				option
+					&.happy, &.sad
+						background: url(../upload/happy.png) 0 0 no-repeat
+						background-size: 20px
+					&.sad 
+						background-image: url(../upload/sad.png)
+		.complaint_problems
+			.problem
+				height: 165px
+				padding: 20px
+				border: 1px solid #ccc
+				border-radius: 20px
+				margin-bottom: 20px
+				&.isResolved 
+					h4
+						position: relative
+						&::before 
+							content: ""
+							width: 23px
+							height: 23px
+							background: url(../img/ic_tick.png) 0 0 no-repeat
+							background-size: 23px
+							position: absolute
+							top: -2px
+							left: 0px
+				&.isNotResolved 
+					h4
+						position: relative
+						&::before 
+							content: ""
+							width: 23px
+							height: 23px
+							background: url(../img/ic_cross.png) 0 0 no-repeat
+							background-size: 23px
+							position: absolute
+							top: -2px
+							left: 0px
+				.status_image_block
+					float: left 
+					width: 20%
+					height: 100%
+					.wrapper
+						width: 100%
+						height: 100%
+						overflow: hidden
+						img 
+							width: 100%
+							height: 100%
+				.content 
+					float: left
+					width: 80%
+					padding-left: 3%
+					h4 
+						font-size: 19px
+						font-weight: normal
+						margin-bottom: 15px
+						padding-left: 26px
+						a
+							+link
+					p
+						margin-bottom: 0
+						margin-top: 0
+						display: block /* Fallback for non-webkit */
+						display: -webkit-box
+						height: $font-size * $line-height * $lines-to-show /* Fallback for non-webkit */
+						margin: 0 auto
+						font-size: $font-size
+						line-height: $line-height
+						-webkit-line-clamp: $lines-to-show
+						-webkit-box-orient: vertical
+						overflow: hidden
+						text-overflow: ellipsis
+
+
+
+
+
