@@ -162,10 +162,6 @@ server.post(['/entry/create', '/entry/:id/update'], (request, response) => {
     const Location = request.body['location'];    
     const ProblemRegion = request.body['problemRegion'];
 
-    
-
-    console.log(PhoneNumber + "  " + Problem_Type + " " + Content + " " + Location);
-
     if (id) {
         Entry.update({
             'title': title,
@@ -249,7 +245,6 @@ server.get('/entry/:id', (request, response) => {
             }
         ],
     }).then(entry => {
-        console.log(entry);
         response.render('entry', {
             'entry': entry,
             'comment': null
@@ -398,7 +393,6 @@ server.post([
             'entryId': entryID,
             'content': content
         }).then(() => {
-            console.log("here---------------");
             response.redirect(`/entry/${entryID}`);
         }).catch(error => {
             console.error(error);
