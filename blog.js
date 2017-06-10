@@ -56,7 +56,7 @@ const Entry = database.define('entry', {
         'allowNull': false
     },
     'Photo': {
-        'type': Sequelize.BLOB('long'),
+        'type': Sequelize.STRING,
         'allowNull': true
     },
     'Location': {
@@ -129,7 +129,6 @@ server.get(['/entry/create', '/entry/:id/update'], (request, response) => {
             return;
         }
         Entry.findById(id).then(entry => {
-            console.log(entry);
             response.render('entry-create-update', {
                 'entry': entry,
                 'comment': null
@@ -183,7 +182,6 @@ server.post(['/entry/create', '/entry/:id/update'], (request, response) => {
             response.redirect(`/entry/${id}`);
         });
     } else {
-        console.log("------------------")
         Entry.create({
             'PhoneNumber': PhoneNumber,
             'Problem_Type': Problem_Type,
