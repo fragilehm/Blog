@@ -56,7 +56,7 @@ const Entry = database.define('entry', {
         'allowNull': false
     },
     'Photo': {
-        'type': Sequelize.STRING,
+        'type': Sequelize.BLOB('long'),
         'allowNull': true
     },
     'Location': {

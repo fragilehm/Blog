@@ -26,12 +26,15 @@ function myFunction(){
 
         var file = x.files[i];
 
-        var img = document.createElement("img");
+        //var img = document.createElement("img");
+        var setImage = document.getElementById("loadImage");
+        var imageLink = document.getElementById("imageLink");
+
         var reader = new FileReader();
         reader.onloadend = function() {
-            img.src = reader.result;
+            setImage.src = reader.result;
+            imageLink.value = reader.result;
         }
         reader.readAsDataURL(file);
-        $(".myUpload").after(img);
     }
 }
