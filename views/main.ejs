@@ -26,12 +26,15 @@
 			<div class="problems_categories">
 				<div class="cols clearfix">
 					<div class="col">
-						<a href="entry/create">
+						<form action="entry/create" method="GET">
+						    <button>
 							<div class="image">
 								<img src="upload/Asset 1.png" alt="Garbage category image">
 							</div>
 							<h3>Переработка отходов</h3>
-						</a>
+							<input type="hidden" name="organ" value="SanEco">	
+							</button>
+						</form>
 					</div>
 					<div class="col">
 						<a href="entry/create">
@@ -39,6 +42,7 @@
 								<img src="upload/Asset 2.png" alt="Garbage category image">
 							</div>
 							<h3>Электроснабжение</h3>
+							<input type="hidden" name="organ" value="SevElektro">
 						</a>
 					</div>
 					<div class="col">
@@ -47,6 +51,8 @@
 								<img src="upload/Asset 3.png" alt="Garbage category image">
 							</div>
 							<h3>Водоснабжение</h3>
+							<input type="hidden" name="organ" value="ProizEksp">
+
 						</a>
 					</div>
 					<div class="col">
@@ -55,14 +61,18 @@
 								<img src="upload/Asset 4.png" alt="Garbage category image">
 							</div>
 							<h3>Загрязнение атмосферы</h3>
+							<input type="hidden" name="organ" value="Tazalyk">
+
 						</a>
 					</div>
 					<div class="col">
-						<a href="entry/create">
+						<a href="entry/create" name="organs">
 							<div class="image">
 								<img src="upload/Asset 5.png" alt="Garbage category image">
 							</div>
 							<h3>Уничтожение видов растений</h3>
+							<input type="hidden" name="organ" value="Zelen">
+
 						</a>
 					</div>
 					<div class="col">
@@ -71,6 +81,8 @@
 								<img src="upload/Asset 6.png" alt="Garbage category image">
 							</div>
 							<h3>Стихийные природные явления</h3>
+							<input type="hidden" name="organ" value="GosSanitEpid">
+
 						</a>
 					</div>
 						<div class="col">
@@ -79,6 +91,8 @@
 								<img src="upload/Asset 7.png" alt="Garbage category image">
 							</div>
 							<h3>Дорожные происшествия</h3>
+							<input type="hidden" name="organ" value="UprGor">
+
 						</a>
 					</div>
 				</div>

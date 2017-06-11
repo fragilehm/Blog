@@ -1,3 +1,6 @@
+
+const request = require('request');
+const xml2js = require('xml2js');
 const path =
     require('path');
 const express =
@@ -12,6 +15,7 @@ const bcrypt =
     require('bcryptjs');
 const dotenv =
     require('dotenv').config();
+var i = 25;
 
 let databaseHost =
     process.env['BLOG_DATABASE_HOST'];
@@ -56,7 +60,11 @@ const User = database.define('user', {
         'allowNull': false
     }
 });
-
+const Id = database.define('id', {
+    'id1': {
+        'type': Sequelize.INTEGER
+    }
+});
 const Entry = database.define('entry', {
     'PhoneNumber': {
         'type': Sequelize.STRING,
@@ -75,6 +83,10 @@ const Entry = database.define('entry', {
         'allowNull': true
     },
     'Location': {
+        'type': Sequelize.STRING,
+        'allowNull': true
+    },
+    'Organ': {
         'type': Sequelize.STRING,
         'allowNull': true
     }
@@ -169,7 +181,7 @@ server.post('/login', (request, response) => {
 });
 
 server.get('/entries', (request, response) => {
-    Entry.findAll({order: '"createdAt" DESC' }
+    Entry.findAll({ order: [['createdAt', 'DESC']]}
         ).then(entries => {
         response.render('entries', {
             'session': request.session,
@@ -185,12 +197,15 @@ server.get('/entries', (request, response) => {
 server.get('/entry/create', (request, response) => {
    
    // const previousLocation = request.header('Referer') || '/entries';
+     const organ = request.query['organ'];
+     console.log(organ);
 
     let entry = undefined;
     response.render('entry-create-update', {
         'session': request.session,
         'entry': null,
-        'comment': null
+        'comment': null,
+        'organ': organ
     });
     // } else {
     //     id = request.params['id'];
@@ -232,6 +247,8 @@ server.post('/entry/create', (request, response) => {
     const Content = request.body['content'];
     const Location = request.body['location'];    
     const ProblemRegion = request.body['problemRegion'];
+    const Organ = request.body['organ'];
+    console.log(Organ + " muhanmed");
 
     // if (id) {
     //     Entry.update({
@@ -255,10 +272,23 @@ server.post('/entry/create', (request, response) => {
         'Content': Content,
         'Photo': Photo,
         'Location': Location,
-        'ProblemRegion': ProblemRegion
+        'ProblemRegion': ProblemRegion,
+        'Organ': Organ
 
     }).then(entry => {
-        response.redirect('/entries');
+        //send_mail(PhoneNumber);
+
+        send_xml(PhoneNumber, response).then(
+            (data) => {
+                console.log(data);
+                response.redirect('/entries');
+            }
+        ).catch(
+            (err) => {
+                console.log(err);
+                response.redirect('/entries');
+            }
+        );    
     }).catch(error => {
         console.error(error);
         request.session.errors.push('Failed to create a new blog entry.');
@@ -479,7 +509,6 @@ server.post([
     }
 });
 
-
 database.sync().then(() => {
 }).then(() => {
     server.listen(serverPort, () => {
@@ -487,3 +516,72 @@ database.sync().then(() => {
     });
 });
 
+
+var send_xml = function(phone, res) {
+    return new Promise((reject, resolve) => {
+        var i = 0;
+        Id.findById(1).then(id => {
+            console.log(id);
+            let options = { 
+                 method: 'POST',
+                 url: 'https://smspro.nikita.kg/api/message',
+                 headers: { 'content-type': 'application/xml' },
+                 body: '<?xml version="1.0" encoding="UTF-8"?> \n' +
+                   '<message>\n\t' +
+                     '<login>' + 'Pascal' + '</login>\n\t' +
+                     '<pwd>' + 'uV5x3ent' + '</pwd>\n\t' +
+                     '<id>' + id.id1 + '</id>\n\t' +
+                     '<sender>' + '996773773827' + '</sender>\n\t' +
+                     '<text>'+ 'Ваша жалоба принята во внимание!' +'</text>\n\t' +
+                     '<phones>\n\t\t' +
+                       '<phone>'+ phone +'</phone>\n\t' +
+                     '</phones>\n\t' +
+                   '</message>'
+            };
+            Id.update({
+                'id1': id.id1 + 1
+            }, {
+                'where': {
+                    'ID': 1
+                }
+            }).then(() => {
+            }).catch(error => {
+                console.error(error);
+            });
+                    //console.log(options);
+            request(options, (error, response, body) => {
+                console.log('----------request----------');
+           // console.log(response);
+        //    console.log(body);
+                console.log(error);
+                if (error) {     
+                    console.log('----------error----------');
+                    reject(error);
+                }
+                resolve(body);
+            });        
+        }).catch(error => {
+             console.error(error);
+    });
+            
+    });
+}
+
+var send_mail = function(email) {
+    var api_key = 'key-d67441ff9bac5b07a5f83be55cfcd897';
+    var domain = 'www.interier.kg';
+    var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+    
+    var data = {
+        from: 'Uberi.KG <postmaster@interier.kg>',
+        to: email,
+        subject: 'Uberi.KG',
+        text: 'Ваша предложение отослано соответствующему органу исполнительной власти. '
+    };
+
+    mailgun.messages().send(data, function (error, body) {
+        if(error) {
+            throw error;
+        }
+    });
+}

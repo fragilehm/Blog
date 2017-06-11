@@ -31,6 +31,9 @@
         <div class="content">
             <form method="POST" action="/entry/create">
                 <div class="problem_name">
+                    <input type="hidden" name="organ" value="<%= organ %>">
+                </div>
+                <div class="problem_name">
                     <p>Краткое описание:</p>
                     <input type="text" name="title" id="#complaint_name">
                 </div>
