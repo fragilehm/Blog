@@ -133,12 +133,6 @@ server.get('/login', (request, response) => {
     });
 });
 
-server.post('/logout', (request, response) => {
-    request.session.regenerate(() => {
-        response.redirect('/');
-    });
-});
-
 server.post('/login', (request, response) => {
     const destination = '/';
 
@@ -170,8 +164,17 @@ server.post('/login', (request, response) => {
 
         request.session.userID = user.id;
         request.session.authorized = true;
-
-        response.redirect(destination);
+        Entry.findAll({ 'where': { 'Organ': login } }
+            ).then(entries => {
+            response.render('entries', {
+                'session': request.session,
+                'entries': entries
+            });
+        }).catch(error => {
+            console.error(error);
+            response.status(500).end('Internal Server Error');
+        });
+         
     }).catch(error => {
         console.error(error);
         request.session.errors.push('Failed to authenticate.')
@@ -179,7 +182,24 @@ server.post('/login', (request, response) => {
         return;
     })
 });
-
+// server.get('/organEntries', (request, response) => {
+//     Entry.findById(request.session.userID).then(entry => {
+//         Entry.findAll({ 'where': { 'Organ': entry.Organ }}
+//             ).then(entries => {
+//             response.render('entries', {
+//                 'session': request.session,
+//                 'entries': entries
+//             });
+//         }).catch(error => {
+//             console.error(error);
+//             response.status(500).end('Internal Server Error');
+//         });
+//     }).catch(error => {
+//         console.error(error);
+//         request.session.errors.push('Failed to find the specified blog entry.')
+//         response.redirect(previousLocation);
+//     });
+// });
 server.get('/entries', (request, response) => {
     Entry.findAll({ order: [['createdAt', 'DESC']]}
         ).then(entries => {

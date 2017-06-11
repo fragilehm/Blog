@@ -16,9 +16,11 @@
         </div>
         <div class="menu_list">
             <ul>
-                <li><a href="/main"><i class="fa fa-home" aria-hidden="true"></i><span>Главная</span></a></li>
+                <li><a href="/main" class="active"><i class="fa fa-home" aria-hidden="true"></i><span>Главная</span></a></li>
                 <li><a href="/entries"><i class="fa fa-tasks" aria-hidden="true"></i><span>Проблемы</span></a></li>
                 <li><a href="/entry/create"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span>Форма</span></a></li>
+                <li><a href="/problemsCritical.html"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span>Критические</span></a></li>
+                <li><a href="/login"><i class="fa fa-user" aria-hidden="true"></i><span>Админ</span></a>
             </ul>
         </div>
     </header>
@@ -30,8 +32,9 @@
         </div>
         <div class="content">
             <form method="POST" action="/entry/create">
+
                 <div class="problem_name">
-                    <input type="hidden" name="organ" value="<%= organ %>">
+                    <input type="hidden" name="organ" value="<%= organ ? organ : 'Zelen'%>">
                 </div>
                 <div class="problem_name">
                     <p>Краткое описание:</p>

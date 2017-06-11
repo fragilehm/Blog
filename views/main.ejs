@@ -13,9 +13,11 @@
 	<header>
 		<div class="menu_list">
 			<ul>
-				<li class="active"><a href="main"><i class="fa fa-home" aria-hidden="true"></i><span>Главная</span></a></li>
+				<li><a href="main" class="active"><i class="fa fa-home" aria-hidden="true"></i><span>Главная</span></a></li>
 				<li><a href="entries"><i class="fa fa-tasks" aria-hidden="true"></i><span>Проблемы</span></a></li>
 				<li><a href="entry/create"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span>Форма</span></a></li>
+				<li><a href="problemsCritical.html"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span>Критические</span></a></li>
+				<li><a href="login"><i class="fa fa-user" aria-hidden="true"></i><span>Админ</span></a>
 			</ul>
 		</div>
 	</header>
@@ -37,63 +39,73 @@
 						</form>
 					</div>
 					<div class="col">
-						<a href="entry/create">
+						<form action="entry/create" method="GET">
+						    <button>
 							<div class="image">
 								<img src="upload/Asset 2.png" alt="Garbage category image">
 							</div>
 							<h3>Электроснабжение</h3>
 							<input type="hidden" name="organ" value="SevElektro">
-						</a>
+							</button>
+						</form>
+
 					</div>
 					<div class="col">
-						<a href="entry/create">
-							<div class="image">
-								<img src="upload/Asset 3.png" alt="Garbage category image">
+						<form action="entry/create" method="GET">
+					    <button>
+					    	<div class="image">
+							<img src="upload/Asset 3.png" alt="Garbage category image">
 							</div>
 							<h3>Водоснабжение</h3>
 							<input type="hidden" name="organ" value="ProizEksp">
 
-						</a>
-					</div>
+							</button>
+						</form>					
+						</div>
 					<div class="col">
-						<a href="entry/create">
+						<form action="entry/create" method="GET">
+											    <button>
 							<div class="image">
 								<img src="upload/Asset 4.png" alt="Garbage category image">
 							</div>
 							<h3>Загрязнение атмосферы</h3>
 							<input type="hidden" name="organ" value="Tazalyk">
-
-						</a>
+								</button>
+							</form>
 					</div>
 					<div class="col">
-						<a href="entry/create" name="organs">
+						<form action="entry/create" method="GET">
+											    <button>
 							<div class="image">
 								<img src="upload/Asset 5.png" alt="Garbage category image">
 							</div>
 							<h3>Уничтожение видов растений</h3>
 							<input type="hidden" name="organ" value="Zelen">
-
-						</a>
+								</button>
+							</form>
 					</div>
 					<div class="col">
-						<a href="entry/create">
+						<form action="entry/create" method="GET">
+											    <button>
 							<div class="image">
 								<img src="upload/Asset 6.png" alt="Garbage category image">
 							</div>
 							<h3>Стихийные природные явления</h3>
 							<input type="hidden" name="organ" value="GosSanitEpid">
 
-						</a>
+							</button>
+						</form>
 					</div>
 						<div class="col">
-						<a href="entry/create">
+						<form action="entry/create" method="GET">
+											    <button>
 							<div class="image">
 								<img src="upload/Asset 7.png" alt="Garbage category image">
 							</div>
 							<h3>Дорожные происшествия</h3>
 							<input type="hidden" name="organ" value="UprGor">
-
-						</a>
+								</button>
+							</form>
 					</div>
 				</div>
 			</div>
