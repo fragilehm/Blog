@@ -41,6 +41,22 @@ const database = new Sequelize(databaseName, databaseUser, databasePassword, {
     }
 });
 
+const User = database.define('user', {
+    'login': {
+        'type': Sequelize.STRING,
+        'allowNull': false,
+        'unique': true
+    },
+    'name': {
+        'type': Sequelize.STRING,
+        'allowNull': false
+    },
+    'credentials': {
+        'type': Sequelize.STRING,
+        'allowNull': false
+    }
+});
+
 const Entry = database.define('entry', {
     'PhoneNumber': {
         'type': Sequelize.STRING,
@@ -99,10 +115,64 @@ server.get(['/', '/main'], (request, response) => {
     });
 });
 
+server.get('/login', (request, response) => {
+    response.render('login', {
+        'session': request.session
+    });
+});
+
+server.post('/logout', (request, response) => {
+    request.session.regenerate(() => {
+        response.redirect('/');
+    });
+});
+
+server.post('/login', (request, response) => {
+    const destination = '/';
+
+    const login = request.body['login'];
+    if (!login) {
+        request.session.errors.push('The login was not provided.')
+    }
+
+   const password = request.body['password'];
+    if (!password) {
+        request.session.errors.push('The password was not provided.')
+    }
+    console.log(login + "  " + password);
+
+    // if (request.session.errors.length > 0) {
+    //     response.redirect(destination);
+
+    //     return;
+    // }
+
+    User.findOne({ 'where': { 'login': login } }).then(user => {
+        if (password != user.credentials) {
+            console.log(user);
+
+            request.session.errors.push('The login or password is not valid.')
+            response.redirect(destination);
+            return;
+        }
+
+        request.session.userID = user.id;
+        request.session.authorized = true;
+
+        response.redirect(destination);
+    }).catch(error => {
+        console.error(error);
+        request.session.errors.push('Failed to authenticate.')
+        response.redirect(destination);
+        return;
+    })
+});
+
 server.get('/entries', (request, response) => {
     Entry.findAll({order: '"createdAt" DESC' }
         ).then(entries => {
         response.render('entries', {
+            'session': request.session,
             'entries': entries
         });
 
@@ -118,6 +188,7 @@ server.get('/entry/create', (request, response) => {
 
     let entry = undefined;
     response.render('entry-create-update', {
+        'session': request.session,
         'entry': null,
         'comment': null
     });
@@ -237,103 +308,106 @@ server.get('/entry/:id', (request, response) => {
     if (!id) {
         request.session.errors.push('The blog entry is unknown.');
         response.redirect(previousLocation);
+
         return;
     }
-    Entry.findById(id,  {
+
+    Entry.findById(id, {
         'include': [ {
-            'model': Comment        
-            }
-        ],
+            'model': Comment
+        } ]
     }).then(entry => {
         response.render('entry', {
+            'session': request.session,
             'entry': entry,
             'comment': null
         });
     }).catch(error => {
         console.error(error);
+
         request.session.errors.push('The blog entry was not found.');
         response.redirect(previousLocation);
     });
 });
 
-server.get([
-    '/entry/:entryID/comment/:id/delete',
-    '/entry/:entryID/comment/:id/update'
-]
-, (request, response) => {
-    const previousLocation = request.header('Referer') || '/entries';
+// server.get([
+//     '/entry/:entryID/comment/:id/delete',
+//     '/entry/:entryID/comment/:id/update'
+// ]
+// , (request, response) => {
+//     const previousLocation = request.header('Referer') || '/entries';
 
-    const destination = request.header('Referer') || '/entries';
+//     const destination = request.header('Referer') || '/entries';
 
-    id = request.params['id'];
+//     id = request.params['id'];
 
 
-    const userID = request.session['userID'];
-    if (!userID) {
-        request.session.errors.push("The comment's owner is unknown.");
-        response.redirect(destination);
+//     const userID = request.session['userID'];
+//     if (!userID) {
+//         request.session.errors.push("The comment's owner is unknown.");
+//         response.redirect(destination);
 
-        return;
-    }
-    const entryID = request.params['entryID'];
-    if (!entryID) {
-        request.session.errors.push('The owning blog entry is not specified.');
-        response.redirect(destination);
+//         return;
+//     }
+//     const entryID = request.params['entryID'];
+//     if (!entryID) {
+//         request.session.errors.push('The owning blog entry is not specified.');
+//         response.redirect(destination);
 
-        return;
-    }
+//         return;
+//     }
 
-    if (request.path.endsWith('/delete')) {
+//     if (request.path.endsWith('/delete')) {
 
-        Comment.destroy({
-                'where': {
-                    'id': id
-                }
-            }).then(() => {
-                response.redirect(`/entry/${entryID}`);
+//         Comment.destroy({
+//                 'where': {
+//                     'id': id
+//                 }
+//             }).then(() => {
+//                 response.redirect(`/entry/${entryID}`);
                 
 
-            }).catch(error => {
-                console.error(error);
-                request.session.errors.push('Failed to remove the blog entry.');
-                response.redirect(`/entry/${entryID}`);
+//             }).catch(error => {
+//                 console.error(error);
+//                 request.session.errors.push('Failed to remove the blog entry.');
+//                 response.redirect(`/entry/${entryID}`);
                 
-            });
-    } else {
+//             });
+//     } else {
 
-        Entry.findById(entryID).then(entry => {
-            Comment.findById(id).then(comment => {
-                response.render('entry-create-update', {
-                    'entry': entry,
-                    'session': request.session,
-                    'comment': comment,
-                    'userId': request.session.userID,
-                    'admin': request.session.administrator
-                });
-            }).catch(error => {
-                console.error(error);
-                request.session.errors.push('Failed to find the specified comment.')
-                response.redirect(previousLocation);
-            });
-        }).catch(error => {
-            console.error(error);
-            request.session.errors.push('The blog entry was not found.');
-            response.redirect(previousLocation);
-        });
+//         Entry.findById(entryID).then(entry => {
+//             Comment.findById(id).then(comment => {
+//                 response.render('entry-create-update', {
+//                     'entry': entry,
+//                     'session': request.session,
+//                     'comment': comment,
+//                     'userId': request.session.userID,
+//                     'admin': request.session.administrator
+//                 });
+//             }).catch(error => {
+//                 console.error(error);
+//                 request.session.errors.push('Failed to find the specified comment.')
+//                 response.redirect(previousLocation);
+//             });
+//         }).catch(error => {
+//             console.error(error);
+//             request.session.errors.push('The blog entry was not found.');
+//             response.redirect(previousLocation);
+//         });
        
-    }
+//     }
 
-});
+// });
 
 server.post([
     '/entry/:entryID/comment/create',
     '/entry/:entryID/comment/:id/update'
 ], (request, response) => {
-    // if (!request.session.authorized) {
-    //     response.status(401).end('Unauthorized');
+    if (!request.session.authorized) {
+        response.status(401).end('Unauthorized');
 
-    //     return;
-    // }
+        return;
+    }
 
     const destination = request.header('Referer') || '/entries';
 
@@ -356,13 +430,13 @@ server.post([
         return;
     }
 
-    // const userID = request.session['userID'];
-    // if (!userID) {
-    //     request.session.errors.push("The comment's owner is unknown.");
-    //     response.redirect(destination);
+    const userID = request.session['userID'];
+    if (!userID) {
+        request.session.errors.push("The comment's owner is unknown.");
+        response.redirect(destination);
 
-    //     return;
-    // }
+        return;
+    }
 
     const entryID = request.params['entryID'];
     if (!entryID) {
@@ -374,6 +448,7 @@ server.post([
 
     if (id) {
         Comment.update({
+            'userId': userID,
             'entryId': entryID,
             'content': content
         }, {
@@ -385,11 +460,12 @@ server.post([
         }).catch(error => {
             console.error(error);
 
-            request.session.errors.push('Failed to update a comment.');
+            request.session.errors.push('Failed to create a new comment.');
             response.redirect(`/entry/${entryID}`);
         });
     } else {
         Comment.create({
+            'userId': userID,
             'entryId': entryID,
             'content': content
         }).then(() => {
@@ -402,6 +478,7 @@ server.post([
         });
     }
 });
+
 
 database.sync().then(() => {
 }).then(() => {
