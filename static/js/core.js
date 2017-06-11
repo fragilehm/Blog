@@ -1,13 +1,13 @@
 $(document).ready(function(){
-	$(window).scroll(function() {
-    	if ($(this).scrollTop() > 0) {
-        	$("h2").css({'position':'fixed', 'top' : '0', 'opacity' : '0.7'});
-        	$("h2 span").css({'display' : 'block', 'transform': 'translateX(-400px)'});
-    	} else {
-	    	$("h2").css({'position': 'initial', 'opacity' : '1'});
-	    	$("h2 span").css({'display' : 'block', 'transform': 'translateX(0px)'});
-    	}
-	});
+	// $(window).scroll(function() {
+ //    	if ($(this).scrollTop() > 0) {
+ //        	$("h2").css({'position':'fixed', 'top' : '0', 'opacity' : '0.7'});
+ //        	$("h2 span").css({'display' : 'block', 'transform': 'translateX(-400px)'});
+ //    	} else {
+	//     	$("h2").css({'position': 'initial', 'opacity' : '1'});
+	//     	$("h2 span").css({'display' : 'block', 'transform': 'translateX(0px)'});
+ //    	}
+	// });
     $(window).scroll(function() {
         if ($(this).scrollTop() > 284) {
             $(".filter_block").css({'position' : 'fixed', 'top' : '0', 'left' : '220px', 'width' : '1000px'});

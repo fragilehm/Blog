@@ -133,8 +133,16 @@ server.get('/login', (request, response) => {
     });
 });
 server.get('/problemsCritical', (request, response) => {
-    response.render('problemsCritical', {
-        'session': request.session
+      Entry.findAll({ limit:4, order: [['createdAt', 'DESC']]}
+        ).then(entries => {
+        response.render('problemsCritical', {
+            'session': request.session,
+            'entries': entries
+        });
+
+    }).catch(error => {
+        console.error(error);
+        response.status(500).end('Internal Server Error');
     });
 });
 server.post('/login', (request, response) => {
@@ -204,6 +212,7 @@ server.post('/login', (request, response) => {
 //         response.redirect(previousLocation);
 //     });
 // });
+
 server.get('/entries', (request, response) => {
     Entry.findAll({ order: [['createdAt', 'DESC']]}
         ).then(entries => {

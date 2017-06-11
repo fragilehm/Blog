@@ -27,73 +27,21 @@
 		<div class="container">
 			<div class="complaint_problems">
 				<h3>Муниципальное презприятие «ЗЕЛЕНСТРОЙ»<span class="numberOfUnresolved"><i>Нерешённые:</i> 4</span></h3>
-				<div class="problem clearfix isNotResolved">
-					<div class="status_image_block">
-						<div class="wrapper">
-							<img src="upload/ic_water.jpg" alt="Problem status image">
-						</div>
-					</div>
-					<div class="content">
-						<h4><a href="problemDesc.html">Советская/Горького</a></h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur atque vitae quos earum et doloremque error repellat illum? Quaerat sapiente perspiciatis veritatis cupiditate dignissimos quasi, fugit saepe non tempore.</p>
-					</div>
-				</div>
-				<div class="problem clearfix isNotResolved">
-					<div class="status_image_block">
-						<div class="wrapper">
-							<img src="upload/ic_lamp.png" alt="Problem status image">
-						</div>
-					</div>
-					<div class="content">
-						<h4><a href="problemDesc.html">Советская/Горького</a></h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur atque vitae quos earum et doloremque error repellat illum? Quaerat sapiente perspiciatis veritatis cupiditate dignissimos quasi, fugit saepe non tempore.</p>
-					</div>
-				</div>
-				<div class="problem clearfix isNotResolved">
-					<div class="status_image_block">
-						<div class="wrapper">
-							<img src="upload/ic_trash.jpg" alt="Problem status image">
-						</div>
-					</div>
-					<div class="content">
-						<h4><a href="problemDesc.html">Советская/Горького</a></h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur atque vitae quos earum et doloremque error repellat illum? Quaerat sapiente perspiciatis veritatis cupiditate dignissimos quasi, fugit saepe non tempore.</p>
-					</div>
-				</div>
-				<div class="problem clearfix isNotResolved">
-					<div class="status_image_block">
-						<div class="wrapper">
-							<img src="upload/ic_tree.png" alt="Complaint image">
-						</div>
-					</div>
-					<div class="content">
-						<h4><a href="problemDesc.html">Советская/Горького</a></h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur atque vitae quos earum et doloremque error repellat illum? Quaerat sapiente perspiciatis veritatis cupiditate dignissimos quasi, fugit saepe non tempore.</p>
-					</div>
-				</div>
-				<h3>Бишкекское троллейбусное управление<span class="numberOfUnresolved"><i>Нерешённые:</i> 2</span></h3>
-				<div class="problem clearfix isNotResolved">
-					<div class="status_image_block">
-						<div class="wrapper">
-							<img src="upload/ic_lamp.png" alt="Problem status image">
-						</div>
-					</div>
-					<div class="content">
-						<h4><a href="problemDesc.html">Советская/Горького</a></h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur atque vitae quos earum et doloremque error repellat illum? Quaerat sapiente perspiciatis veritatis cupiditate dignissimos quasi, fugit saepe non tempore.</p>
-					</div>
-				</div>
-				<div class="problem clearfix isNotResolved">
-					<div class="status_image_block">
-						<div class="wrapper">
-							<img src="upload/ic_trash.jpg" alt="Problem status image">
-						</div>
-					</div>
-					<div class="content">
-						<h4><a href="problemDesc.html">Советская/Горького</a></h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur atque vitae quos earum et doloremque error repellat illum? Quaerat sapiente perspiciatis veritatis cupiditate dignissimos quasi, fugit saepe non tempore.</p>
-					</div>
-				</div>
+               <% for (let [id, entry] of Object.entries(entries)) { %>
+
+                   <div class="problem clearfix isNotResolved">
+                       <div class="status_image_block">
+                           <div class="wrapper">
+                               <img src="/images/<%= entry.Photo %>" alt="Problem status image">
+                           </div>
+                       </div>
+                       <div class="content">
+                           <h4><a href="/entry/<%= entry.id %>"><%= entry.Location %></a></h4>
+                           <p><%= entry.Content %></p>
+                       </div>
+                   </div>
+               <% } %> 
+				
 			</div>
 		</div>
 	</div>
