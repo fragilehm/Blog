@@ -132,7 +132,11 @@ server.get('/login', (request, response) => {
         'session': request.session
     });
 });
-
+server.get('/problemsCritical', (request, response) => {
+    response.render('problemsCritical', {
+        'session': request.session
+    });
+});
 server.post('/login', (request, response) => {
     const destination = '/';
 

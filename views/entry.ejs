@@ -1,20 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-    <% include partials/head %>
-    <body>
-        <main>
-            <% include partials/header %>
-            <div class="center">
-            <article>
-                <h1><%= entry.Location %></h1>
-                <p><%= entry.Content %></p>
-                <hr>
-            </article>
-            <% include partials/comment-form %>
-            <% include partials/comments %>
-            </div>
-            <% include partials/footer %>
-        </main>
-    </body>
-</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uberi</title>
+    <link rel="shortcut icon" sizes="16x16 24x24 32x32 36x36 48x48 57x57 60x60 64x64 70x70 72x72 76x76 96x96 114x114 120x120 144x144 150x150 152x152 180x180 192x192 310x150 310x310" href="favicon.ico">
+    <link href="/https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700|family=Cormorant+SC:300,400,500,600,700|Cormorant+Unicase:300,400,500,600,700&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
+    <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/media.css">
+</head>
+<body onload="myFunction()">
+    <header>
+        <div class="menu_list">
+            <ul>
+                <li><a href="/main" class="active"><i class="fa fa-home" aria-hidden="true"></i><span>Главная</span></a></li>
+                <li><a href="/entries"><i class="fa fa-tasks" aria-hidden="true"></i><span>Проблемы</span></a></li>
+                <li><a href="/entry/create"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span>Форма</span></a></li>
+                <li><a href="/problemsCritical"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span>Критические</span></a></li>
+                <li><a href="/login"><i class="fa fa-user" aria-hidden="true"></i><span>Админ</span></a>
+            </ul>
+        </div>
+    </header>
+    <div class="problem_desc main_content">
+        <h2><span>Проблема</span></h2>
+        <div class="container">
+            <h3><%= entry.Location %></h3>
+            <p><%= entry.Content %></p>
 
+            <div class="image_block">
+                <img src="/images/<%= entry.Photo %>" alt="Problem description image">
+            </div>
+            <div class="comments_block">
+                <h4><i class="fa fa-comments" aria-hidden="true"></i><span>Комментарии:</span></h4>
+                <div class="comment">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores sapiente alias eveniet voluptates quis numquam quia qui, aliquid ipsam, laboriosam optio magni est magnam distinctio explicabo debitis ipsum tempora dignissimos.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/vendor/jquery/jquery-1.12.4.min.js"></script>
+    <script src="/js/core.js"></script>
+    <script src='/https://cdnjs.cloudflare.com/ajax/libs/autosize.js/3.0.15/autosize.min.js'></script>
+</body>
+</html>

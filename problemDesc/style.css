@@ -1,0 +1,2 @@
+.problem_desc h2 { width: 100%; font-family: "Cormorant SC", serif; font-weight: normal; font-size: 33px; text-align: center; padding: 22px 0; margin: 0 0 200px 0; z-index: 100; color: #fff; background: #f7b826; }
+.problem_desc h2 span { transition: all 1s ease-in-out; }
